@@ -19,14 +19,14 @@ if ! docker version &> /dev/null; then
 fi
 
 # Build the image
-APP_NAME="murmur"
+APP_NAME="umurmur"
 docker build --tag "$APP_NAME" .
 
 if confirm_action "Test image?"; then
 	# Set up temporary directory
 	TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
 	add_cleanup "rm -rf $TMP_DIR"
-	touch "$TMP_DIR/murmur.ini"
+	touch "$TMP_DIR/umurmur.ini"
 
 	# Apply permissions, UID & GID matches process user
 	extract_var APP_UID "./Dockerfile" "\K\d+"

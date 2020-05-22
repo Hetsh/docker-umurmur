@@ -1,12 +1,12 @@
 FROM library/alpine:20200428
 RUN apk add --no-cache \
-    murmur=1.3.0-r6
+    umurmur=1.3.0-r6
 
 # App user
-ARG APP_USER="murmur"
+ARG APP_USER="umurmur"
 ARG	OLD_UID=100
 ARG	APP_UID=1363
-ARG APP_GROUP="murmur"
+ARG APP_GROUP="umurmur"
 ARG	OLD_GID=101
 ARG	APP_GID=1363
 RUN sed -i "/:$APP_UID/d" /etc/passwd && \
@@ -15,8 +15,8 @@ RUN sed -i "/:$APP_UID/d" /etc/passwd && \
     sed -i "s|$APP_GROUP:x:$OLD_GID:$OLD_USER|$APP_GROUP:x:$APP_GID:|" /etc/group
 
 # Volumes
-ARG CONF_DIR="/var/lib/murmur"
-RUN mv /etc/murmur.ini "$CONF_DIR" && \
+ARG CONF_DIR="/var/lib/umurmur"
+RUN mv /etc/umurmur.ini "$CONF_DIR" && \
     chown -R "$APP_USER":"$APP_GROUP" "$CONF_DIR"
 VOLUME ["$CONF_DIR"]
 
@@ -25,4 +25,4 @@ EXPOSE 64738/tcp   64738/udp
 
 USER "$APP_USER"
 WORKDIR "$CONF_DIR"
-ENTRYPOINT ["murmurd", "-fg", "-ini", "murmur.ini"]
+ENTRYPOINT ["umurmurd", "-fg", "-ini", "umurmur.ini"]

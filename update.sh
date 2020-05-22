@@ -19,8 +19,8 @@ assert_dependency "curl"
 # Alpine Linux
 update_image "library/alpine" "Alpine Linux" "false" "\d{8}"
 
-# murmur
-update_pkg "murmur" "murmur" "true" "https://pkgs.alpinelinux.org/package/edge/community/x86_64" "(\d+\.)+\d+-r\d+"
+# umurmur
+update_pkg "umurmur" "umurmur" "true" "https://pkgs.alpinelinux.org/package/edge/community/x86_64" "(\d+\.)+\d+-r\d+"
 
 if ! updates_available; then
 	echo "No updates available."
