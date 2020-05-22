@@ -1,0 +1,20 @@
+[Unit]
+Description=murmur Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=-/bin/docker create \
+              --rm \
+              --interactive \
+              --name murmur \
+              --publish 64738:64738/tcp \
+              --publish 64738:64738/udp \
+              --mount type=bind,source=/etc/murmur,target=/var/lib/murmur \
+              --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+              hetsh/murmur
+ExecStart=/bin/docker start --attach murmur
+ExecStop=/bin/docker stop murmur
+
+[Install]
+WantedBy=multi-user.target
