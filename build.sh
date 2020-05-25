@@ -26,7 +26,12 @@ if confirm_action "Test image?"; then
 	# Set up temporary directory
 	TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
 	add_cleanup "rm -rf $TMP_DIR"
-	touch "$TMP_DIR/umurmur.ini"
+	echo "channels = (
+	{
+		name = \"Test\";
+		parent = \"\";
+	}
+);" > "$TMP_DIR/umurmur.conf"
 
 	# Apply permissions, UID & GID matches process user
 	extract_var APP_UID "./Dockerfile" "\K\d+"
@@ -34,13 +39,15 @@ if confirm_action "Test image?"; then
 	chown -R "$APP_UID":"$APP_GID" "$TMP_DIR"
 
 	# Start the test
-	extract_var CONF_DIR "./Dockerfile" "\"\K[^\"]+"
+	extract_var DATA_DIR "./Dockerfile" "\"\K[^\"]+"
+	extract_var CONF_FILE "./Dockerfile" "\"\K[^\"]+"
 	docker run \
 	--rm \
 	--interactive \
 	--publish 64738:64738/tcp \
 	--publish 64738:64738/udp \
-	--mount type=bind,source="$TMP_DIR",target="$CONF_DIR" \
+	--mount type=bind,source="$TMP_DIR",target="$DATA_DIR" \
+	--mount type=bind,source="$TMP_DIR/umurmur.conf",target="$CONF_FILE" \
 	--mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
 	--name "$APP_NAME" \
 	"$APP_NAME"

@@ -1,5 +1,5 @@
 # umurmur
-Super small and easy to setup mumble server.
+Super small and easy to setup micro mumble server.
 
 ## Running the server
 ```bash
@@ -12,20 +12,32 @@ docker stop umurmur
 ```
 
 ## Configuration
-umurmur can be configured with a configuration file `/var/lib/umurmur/umurmur.ini`.
-The file must exist, but it can be empty which means umurmur uses the default values.
+umurmur can be configured with a configuration file `/etc/umurmur.conf`.
+A minimum config file must contain a root channel:
+```
+channels = (
+	{
+		name = "Root";
+		parent = "";
+	}
+);
+```
+A custom configuration can be added as read-only:
+```bash
+docker run --mount type=bind,source=/path/to/umurmur.conf,target=/etc/umurmur.conf,readonly ...
+```
 
 ## Creating persistent storage
 ```bash
 DATA="/path/to/data"
 mkdir -p "$DATA"
-chown -R 1363:1363 "$DATA"
+chown -R 1634:1634 "$DATA"
 ```
-`1363` is the numerical id of the user running the server (see Dockerfile).
+`1634` is the numerical id of the user running the server (see Dockerfile).
 The user must have RW access to the data directory.
 Start the server with the additional mount flags:
 ```bash
-docker run --mount type=bind,source=/path/to/data,target=/var/lib/umurmur ...
+docker run --mount type=bind,source=/path/to/data,target=/etc/umurmur ...
 ```
 
 ## Automate startup and shutdown via systemd
