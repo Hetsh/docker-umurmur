@@ -45,7 +45,7 @@ docker run --mount type=bind,source=/path/to/data,target=/etc/umurmur ...
 systemctl enable umurmur --now
 ```
 The systemd unit can be found in my [GitHub](https://github.com/Hetsh/docker-umurmur) repository.
-By default, the systemd service assumes `/etc/umurmur` for data.
+By default, the systemd service assumes `/etc/umurmur/data` for data and `/etc/umurmur/umurmur.conf` for config.
 You need to adjust these to suit your setup.
 
 ## Fork Me!
