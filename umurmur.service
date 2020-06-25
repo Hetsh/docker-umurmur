@@ -6,7 +6,6 @@ Requires=docker.service
 [Service]
 ExecStartPre=-/bin/docker create \
               --rm \
-              --interactive \
               --name umurmur \
               --publish 64738:64738/tcp \
               --publish 64738:64738/udp \
