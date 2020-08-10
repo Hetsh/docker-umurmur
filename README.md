@@ -41,12 +41,12 @@ docker run --mount type=bind,source=/path/to/data,target=/etc/umurmur ...
 ```
 
 ## Automate startup and shutdown via systemd
+The systemd unit can be found in my GitHub [repository](https://github.com/Hetsh/docker-umurmur).
 ```bash
 systemctl enable umurmur --now
 ```
-The systemd unit can be found in my [GitHub](https://github.com/Hetsh/docker-umurmur) repository.
-By default, the systemd service assumes `/etc/umurmur/data` for data and `/etc/umurmur/umurmur.conf` for config.
-You need to adjust these to suit your setup.
+By default, the systemd service assumes `/apps/umurmur/data` for data and `/apps/umurmur/umurmur.conf` for config and `/etc/localtime` for timezone.
+Since this is a personal systemd unit file, you might need to adjust some parameters to suit your setup.
 
 ## Fork Me!
 This is an open project (visit [GitHub](https://github.com/Hetsh/docker-umurmur)). Please feel free to ask questions, file an issue or contribute to it.
