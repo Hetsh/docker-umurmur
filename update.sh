@@ -23,7 +23,7 @@ update_image "library/alpine" "Alpine Linux" "false" "\d{8}"
 update_pkg "umurmur" "umurmur" "true" "https://pkgs.alpinelinux.org/package/edge/main/x86_64" "(\d+\.)+\d+-r\d+"
 
 if ! updates_available; then
-	echo "No updates available."
+	#echo "No updates available."
 	exit 0
 fi
 
