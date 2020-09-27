@@ -4,9 +4,9 @@ RUN apk add --no-cache \
 
 # App user
 ARG APP_USER="umurmur"
-ARG	APP_UID=1364
+ARG APP_UID=1364
 ARG APP_GROUP="umurmur"
-ARG	APP_GID=1364
+ARG APP_GID=1364
 RUN sed -i "/:$APP_UID/d" /etc/passwd && \
     sed -i "s|$APP_USER:x:[0-9]\+:[0-9]\+|$APP_USER:x:$APP_UID:$APP_GID|" /etc/passwd && \
     sed -i "/:$APP_GID/d" /etc/group && \
