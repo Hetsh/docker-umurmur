@@ -27,32 +27,12 @@ docker build --tag "$IMG_NAME:latest" --tag "$IMG_NAME:$_NEXT_VERSION" .
 case "${1-}" in
 	# Test with default configuration
 	"--test")
-		# Set up temporary directory
-		TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
-		add_cleanup "rm -rf $TMP_DIR"
-		echo "channels = (
-	{
-		name = \"Test\";
-		parent = \"\";
-	}
-);" > "$TMP_DIR/umurmur.conf"
-
-		# Apply permissions, UID & GID matches process user
-		extract_var APP_UID "./Dockerfile" "\K\d+"
-		extract_var APP_GID "./Dockerfile" "\K\d+"
-		chown -R "$APP_UID":"$APP_GID" "$TMP_DIR"
-
-		# Start the test
-		extract_var DATA_DIR "./Dockerfile" "\"\K[^\"]+"
-		extract_var CONF_FILE "./Dockerfile" "\"\K[^\"]+"
 		docker run \
 		--rm \
 		--tty \
 		--interactive \
 		--publish 64738:64738/tcp \
 		--publish 64738:64738/udp \
-		--mount type=bind,source="$TMP_DIR",target="$DATA_DIR" \
-		--mount type=bind,source="$TMP_DIR/umurmur.conf",target="$CONF_FILE" \
 		--mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
 		--name "$APP_NAME" \
 		"$IMG_NAME"
