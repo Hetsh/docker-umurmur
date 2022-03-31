@@ -1,4 +1,4 @@
-FROM amd64/alpine:20220316
+FROM amd64/alpine:20220328
 RUN apk add --no-cache \
         umurmur=0.2.20-r2
 
